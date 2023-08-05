@@ -22,6 +22,18 @@ final class Item: Identifiable {
         self.meal = meal
         
     }
-    
 }
 
+@Model
+final class Items: Identifiable {
+    var id: String
+    var entre: String
+    var day: String
+    
+    init(id: String, entre: String, day: String) {
+        self.id = UUID().uuidString
+        self.entre = entre
+        self.day = day
+        
+    }
+}

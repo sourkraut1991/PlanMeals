@@ -6,10 +6,11 @@
 //
 
 import SwiftUI
+import WishKit
 
 struct WishKitView: View {
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        WishKit.view
     }
 }
 

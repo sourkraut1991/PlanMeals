@@ -7,14 +7,18 @@
 
 import SwiftUI
 import SwiftData
+import WishKit
 
 @main
 struct PlanMealsApp: App {
-
+    init() {
+        WishKit.configure(with: "48F301E6-9B7D-46C5-90A4-401F19643817")
+    }
     var body: some Scene {
         WindowGroup {
             ContentView()
         }
-        .modelContainer(for: Item.self)
+        .modelContainer(for: [Items.self, Item.self])
+       
     }
 }

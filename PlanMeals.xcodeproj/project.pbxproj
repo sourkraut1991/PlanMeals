@@ -12,6 +12,9 @@
 		681BDBBF2A7974B500EDDD6A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 681BDBBE2A7974B500EDDD6A /* Assets.xcassets */; };
 		681BDBC22A7974B500EDDD6A /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 681BDBC12A7974B500EDDD6A /* Preview Assets.xcassets */; };
 		681BDBC42A7974B500EDDD6A /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 681BDBC32A7974B500EDDD6A /* Item.swift */; };
+		6869EB782A7EAA2000CE2370 /* WishKitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6869EB772A7EAA1F00CE2370 /* WishKitView.swift */; };
+		6869EB7D2A7EAA8500CE2370 /* WishKit in Frameworks */ = {isa = PBXBuildFile; productRef = 6869EB7C2A7EAA8500CE2370 /* WishKit */; };
+		6897AC862A7EAB64002C75DC /* WeeklyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6897AC852A7EAB64002C75DC /* WeeklyView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -23,6 +26,8 @@
 		681BDBC32A7974B500EDDD6A /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
 		681BDBC52A7974B500EDDD6A /* PlanMeals.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PlanMeals.entitlements; sourceTree = "<group>"; };
 		681BDBC62A7974B500EDDD6A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		6869EB772A7EAA1F00CE2370 /* WishKitView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WishKitView.swift; path = PlanMeals/Views/WishKitView.swift; sourceTree = SOURCE_ROOT; };
+		6897AC852A7EAB64002C75DC /* WeeklyView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeeklyView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -30,6 +35,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6869EB7D2A7EAA8500CE2370 /* WishKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -39,6 +45,7 @@
 		681BDBAE2A7974B200EDDD6A = {
 			isa = PBXGroup;
 			children = (
+				681BDBBA2A7974B200EDDD6A /* PlanMealsApp.swift */,
 				681BDBB92A7974B200EDDD6A /* PlanMeals */,
 				681BDBB82A7974B200EDDD6A /* Products */,
 			);
@@ -55,10 +62,9 @@
 		681BDBB92A7974B200EDDD6A /* PlanMeals */ = {
 			isa = PBXGroup;
 			children = (
-				681BDBBA2A7974B200EDDD6A /* PlanMealsApp.swift */,
-				681BDBBC2A7974B200EDDD6A /* ContentView.swift */,
+				6869EB7A2A7EAA3D00CE2370 /* Models */,
+				6869EB792A7EAA3000CE2370 /* Views */,
 				681BDBBE2A7974B500EDDD6A /* Assets.xcassets */,
-				681BDBC32A7974B500EDDD6A /* Item.swift */,
 				681BDBC52A7974B500EDDD6A /* PlanMeals.entitlements */,
 				681BDBC62A7974B500EDDD6A /* Info.plist */,
 				681BDBC02A7974B500EDDD6A /* Preview Content */,
@@ -72,6 +78,24 @@
 				681BDBC12A7974B500EDDD6A /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		6869EB792A7EAA3000CE2370 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				6897AC852A7EAB64002C75DC /* WeeklyView.swift */,
+				6869EB772A7EAA1F00CE2370 /* WishKitView.swift */,
+				681BDBBC2A7974B200EDDD6A /* ContentView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		6869EB7A2A7EAA3D00CE2370 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				681BDBC32A7974B500EDDD6A /* Item.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -90,6 +114,9 @@
 			dependencies = (
 			);
 			name = PlanMeals;
+			packageProductDependencies = (
+				6869EB7C2A7EAA8500CE2370 /* WishKit */,
+			);
 			productName = PlanMeals;
 			productReference = 681BDBB72A7974B200EDDD6A /* PlanMeals.app */;
 			productType = "com.apple.product-type.application";
@@ -118,6 +145,9 @@
 				Base,
 			);
 			mainGroup = 681BDBAE2A7974B200EDDD6A;
+			packageReferences = (
+				6869EB7B2A7EAA8500CE2370 /* XCRemoteSwiftPackageReference "wishkit-ios" */,
+			);
 			productRefGroup = 681BDBB82A7974B200EDDD6A /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -146,6 +176,8 @@
 			files = (
 				681BDBBD2A7974B200EDDD6A /* ContentView.swift in Sources */,
 				681BDBC42A7974B500EDDD6A /* Item.swift in Sources */,
+				6897AC862A7EAB64002C75DC /* WeeklyView.swift in Sources */,
+				6869EB782A7EAA2000CE2370 /* WishKitView.swift in Sources */,
 				681BDBBB2A7974B200EDDD6A /* PlanMealsApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -356,6 +388,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		6869EB7B2A7EAA8500CE2370 /* XCRemoteSwiftPackageReference "wishkit-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/wishkit/wishkit-ios.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.3.3;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		6869EB7C2A7EAA8500CE2370 /* WishKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6869EB7B2A7EAA8500CE2370 /* XCRemoteSwiftPackageReference "wishkit-ios" */;
+			productName = WishKit;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 681BDBAF2A7974B200EDDD6A /* Project object */;
 }

@@ -10,7 +10,7 @@ import SwiftData
 
 struct ContentView: View {
     @Environment(\.modelContext) private var modelContext // For SwiftData
-    @Query private var items: [Item] // Database Model
+    @Query private var items: [Item]
     
     // State variables to hold user inputs
     @State private var entre = ""                // New entre item's name
@@ -33,13 +33,9 @@ struct ContentView: View {
             }
         }
     }
-    private func updateItem(_ item: Item) {
+    func updateItem(_ item: Item) {
         // Edit the item data
-        item.id = ""
-        item.entre = entre
-        item.meal = meal
         item.note = note
-        
         do {
             // Save the context
             try modelContext.save()
@@ -48,129 +44,137 @@ struct ContentView: View {
             print("Error saving context: \(error)")
         }
     }
-    
-    // State variable to keep track of the selected tab
-    @State private var selectedTab: Tab = .home
-    
-    // Tab enum representing the different tabs in the TabView
-    enum Tab {
-        case home
-        case explore
-        case wishes
-    }
-    
-    fileprivate func FirstView() -> NavigationView<TupleView<(some View, Text)>> {
-        return //Main View
-        NavigationView {
-            List {
-                ForEach(items) { item in
-                    NavigationLink {
-                        VStack {
-                            //View When clicking an item
-                            Form {
-                                Section {
-                                    Text(item.meal)
-                                } header: {
-                                    Text("Mean Time")
-                                }
-                                Section {
-                                    TextField(text: $note) {
-                                        Text(item.note)
-                                        
-                                    }
-                                } header: {
-                                    Text("Notes")
-                                }
+
+
+
+// State variable to keep track of the selected tab
+@State private var selectedTab: Tab = .home
+
+// Tab enum representing the different tabs in the TabView
+enum Tab {
+    case home
+    case explore
+    case wishes
+}
+
+fileprivate func FirstView() -> NavigationView<TupleView<(some View, Text)>> {
+    return //Main View
+    NavigationView {
+        List {
+            ForEach(items) { item in
+                NavigationLink {
+                    VStack {
+                        //View When clicking an item
+                        Form {
+                            Section {
+                                Text(item.entre)
+                            } header: {
+                                Text("Entree")
+                            }
+                            Section {
+                                Text(item.meal)
+                            } header: {
+                                Text("Mean Time")
+                            }
+                            Section {
+                                TextField("Note", text: $note, axis: .vertical)
+                                    .lineLimit(3, reservesSpace: true)
+                            } header: {
+                                Text("Notes")
                             }
                         }
-                        .toolbar {
-                            ToolbarItem {
-                                Button(action: {
-                                    updateItem(Item.init(id: "", entre: entre, note: note, meal: meal))
-                                }) {
-                                    Text("Update")
-                                }
+                        .onAppear {
+                            note = item.note
+                        }
+                    }
+                    .toolbar {
+                        ToolbarItem {
+                            Button(action: {
+                                updateItem(Item.init(id: "", entre: entre, note: note, meal: meal))
+                            }) {
+                                Text("Update")
                             }
                         }
-                    } label: {
-                        //Main page List
-                        Text(item.entre)
-                        
                     }
-                }
-                .onDelete(perform: deleteItems)
-            }
-            .sheet(isPresented: $isPresentingFormSheet) {
-                // Show the half sheet form here
-                VStack(spacing: 16) {
-                    Text("Create a new meal")
-                    TextField("New Entre", text: $entre) // Text field for entering new entre name
-                        .textFieldStyle(.roundedBorder)
-                        .padding(.horizontal)
+                } label: {
+                    //Main page List
+                    Text(item.entre)
                     
-                    TextField("Enter Meal", text: $meal) // Text field for entering new category
-                        .textFieldStyle(.roundedBorder)
-                        .padding(.horizontal)
-                    
-                    TextField("Extra comments or thoughts?", text: $note) // Text field for entering new category
-                        .textFieldStyle(.roundedBorder)
-                        .padding(.horizontal)
-                    
-                    Button("Add") {
-                        addItem()
-                        entre = ""
-                        meal = ""
-                        note = ""
-                        isPresentingFormSheet = false // Dismiss the form sheet
-                        
-                    }
-                    .foregroundColor(.white)
-                    .frame(maxWidth: 60, minHeight: 30)
-                    .background(Capsule().fill(Color.blue))
-                    //                    .disabled(newEntre.isEmpty || newCategory.isEmpty) // Disable the button if fields are empty
-                }
-                .padding()
-                .presentationDetents([.fraction(0.30)]) // Set the height of the half sheet
-            }
-            //Toolbar for main page
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    EditButton()
-                }
-                ToolbarItem {
-                    Button(action: {
-                        isPresentingFormSheet = true // Set the flag to present the form sheet
-                    }) {
-                        Image(systemName: "plus") // Display a "+" icon
-                    }
                 }
             }
-            Text("Select an item")
+            .onDelete(perform: deleteItems)
         }
+        .sheet(isPresented: $isPresentingFormSheet) {
+            // Show the half sheet form here
+            VStack(spacing: 16) {
+                Text("Create a new meal")
+                TextField("New Entre", text: $entre) // Text field for entering new entre name
+                    .textFieldStyle(.roundedBorder)
+                    .padding(.horizontal)
+                
+                TextField("Enter Meal", text: $meal) // Text field for entering new category
+                    .textFieldStyle(.roundedBorder)
+                    .padding(.horizontal)
+                
+                TextField("Extra comments or thoughts?", text: $note) // Text field for entering new category
+                    .textFieldStyle(.roundedBorder)
+                    .padding(.horizontal)
+                
+                Button("Add") {
+                    addItem()
+                    entre = ""
+                    meal = ""
+                    note = ""
+                    isPresentingFormSheet = false // Dismiss the form sheet
+                    
+                }
+                .foregroundColor(.white)
+                .frame(maxWidth: 60, minHeight: 30)
+                .background(Capsule().fill(Color.blue))
+                //                    .disabled(newEntre.isEmpty || newCategory.isEmpty) // Disable the button if fields are empty
+            }
+            .padding()
+            .presentationDetents([.fraction(0.30)]) // Set the height of the half sheet
+        }
+        //Toolbar for main page
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                EditButton()
+            }
+            ToolbarItem {
+                Button(action: {
+                    isPresentingFormSheet = true // Set the flag to present the form sheet
+                }) {
+                    Image(systemName: "plus") // Display a "+" icon
+                }
+            }
+        }
+        Text("Select an item")
     }
+}
+
+var body: some View {
     
-    var body: some View {
+    TabView(selection: $selectedTab) {
+        // First Tab - Add Entre
+        FirstView()
+            .tag(Tab.home) // Assign the "home" tag to this tab
         
-        TabView(selection: $selectedTab) {
-            // First Tab - Add Entre
-            FirstView()
-                .tag(Tab.home) // Assign the "home" tag to this tab
-            
-            // Second Tab - WeeklyView
-            WeeklyView()
-                .tag(Tab.explore) // Assign the "explore" tag to this tab
-            
-            // Third Tab - WishListView
-            WishListView()
-                .tag(Tab.wishes) // Assign the "wishes" tag to this tab
+        // Second Tab - WeeklyView
+        WeeklyView()
+            .tag(Tab.explore) // Assign the "explore" tag to this tab
+        
+        // Third Tab - WishListView
+        WishKitView().padding(.bottom, 20)
+            .tag(Tab.wishes) // Assign the "wishes" tag to this tab
+    }
+    .overlay(
+        HStack(spacing: 0) {
+            // Custom tab bar items using the tabBarItem function
+            tabBarItem(tab: .home, imageName: "house") // Home tab with house icon
+            tabBarItem(tab: .explore, imageName: "calendar") // Explore tab with calendar icon
+            tabBarItem(tab: .wishes, imageName: "square.and.pencil.circle") // Wishes tab with pencil circle icon
         }
-        .overlay(
-            HStack(spacing: 0) {
-                // Custom tab bar items using the tabBarItem function
-                tabBarItem(tab: .home, imageName: "house") // Home tab with house icon
-                tabBarItem(tab: .explore, imageName: "calendar") // Explore tab with calendar icon
-                tabBarItem(tab: .wishes, imageName: "square.and.pencil.circle") // Wishes tab with pencil circle icon
-            }
             .frame(height: 50) // Set the height of the custom tab bar
             .background(
                 Capsule()
@@ -179,11 +183,22 @@ struct ContentView: View {
             )
             .padding(.horizontal, 16) // Add horizontal padding to the tab bar
             .padding(.bottom, 16) // Add bottom padding to the tab bar
-            , alignment: .bottom // Align the custom tab bar to the bottom of the screen
-        )
+        , alignment: .bottom // Align the custom tab bar to the bottom of the screen
+    )
+}
+func tabBarItem(tab: Tab, imageName: String) -> some View {
+    Button(action: {
+        selectedTab = tab // Set the selected tab when the button is tapped
+    }) {
+        Image(systemName: imageName) // Display the SF Symbol image
+            .resizable()
+            .aspectRatio(contentMode: .fit) // Preserve aspect ratio of the image
+            .frame(width: 20, height: 20) // Set a fixed size for the image
+            .foregroundColor(tab == selectedTab ? .blue : .gray) // Set the image color based on the selected tab
     }
-    
-    
+    .frame(maxWidth: .infinity) // Expand the button to fill the available width
+}
+
 }
 
 #Preview {
